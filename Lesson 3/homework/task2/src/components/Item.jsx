@@ -12,7 +12,7 @@ export default class Item extends React.Component{
             <div className="item">
                     <div className="item-image">
                         <a href={this.props.url}>
-                            <img src={this.props.MainImage.url_570xN} atl={this.props.title} />
+                            <img src={this.props.MainImage.url_570xN} alt={this.props.title} />
                         </a>
                     </div>
                     <div className="item-details">
