@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.message-data{
+  border: 1px dotted #ccc;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.message {
+  clear: both;
+}
+.message .message-data{
+  float: left;
+  background-color: #eee;
+}
+.message.my-message .message-data{
+  float: right;
+  background-color: aquamarine;
+}
+.message-author{
+  font-size: 0.7em;
+  color:#888;
+  text-align: left;
+  margin: 5px;
+}
+.message-timestamp{
+  font-size: 0.4em;
+  color:#888;
+  text-align: right;
+  margin: 2px;
+
+}
+.message-content{
+  text-align: justify;
+}
+.new-message-area{
+  clear: both;
+}
+.secret-area{
+  color: whitesmoke;
+  background-color: #282c34;
+}
+
+
