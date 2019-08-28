@@ -1,0 +1,102 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  position: absolute;
+  z-index: 1000;
+  border: 2px solid #ccc;
+  left:45%;
+  top:50%;
+}
+.message {
+  position: absolute;
+  background-color: #ccc;
+  left:45%;
+  top:50%;
+}
+.message button{
+  float: right;
+}
+.message p{
+  clear: both;
+}
+.login-form,
+.profile-form,
+.profile-content {
+  text-align: left;
+  vertical-align: middle;
+}
+.login-form > *,
+.profile-form > *,
+.profile-content > * {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+  margin: 10px;
+}
+.profile-form h2{
+  padding-right:50px; 
+}
+.profile-content {
+  float: right;
+}
+
+.news-list .new {
+  display: inline-block;
+  max-width: 300px;
+  margin: 20px;
+}
+.news-list img {
+  width: 100%;
+}
+.news-list p{
+  text-align: justify;
+}
+.not-found-container h1{
+
+  font-size: 48px;
+
+}
+.not-found-container p{
+  font-size: 24px;
+}
+.new{
+  padding: 12px;
+}
+.new:hover {
+  cursor: pointer;
+  border: 2px dotted;
+  border-radius: 5px;
+  padding: 10px;
+}

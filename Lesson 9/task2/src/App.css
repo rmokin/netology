@@ -1,0 +1,103 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.main-container{
+
+  margin: 0px;
+  text-align: center;
+
+}
+.loading {
+  position: absolute;
+  z-index: 1000;
+  border: 2px solid #ccc;
+  left:45%;
+  top:50%;
+}
+.message {
+  position: absolute;
+  background-color: #ccc;
+  left:45%;
+  top:50%;
+}
+.message button{
+  float: right;
+}
+.message p{
+  clear: both;
+}
+.post-footer .buttons-container{
+  float: right;
+}
+a.link-button{
+  text-decoration: none;
+  border-bottom: 1px dashed;
+  padding-bottom: 3px;
+  margin: 5px;
+  cursor: pointer;
+}
+.post{
+  max-width: 400px;
+  padding: 20px;
+  border: 2px solid #ccc;
+  margin: 15px auto;
+  border-radius: 5px;
+}
+.post p{
+  text-align: justify;
+  clear: both;
+}
+.post .small{
+  font-size: 0.7em;
+  color:#ccc;
+ 
+}
+.post .date{
+  float: right;
+}
+.post .id{
+  float: left;
+}
+.post .post-footer{
+  clear: both;
+  padding:10px 5px;
+}
+.link-cancel{
+  float: right;
+  text-decoration: none;
+  
+}
+.post-add{
+  max-width: 250px;
+  margin: 0px auto;
+}
