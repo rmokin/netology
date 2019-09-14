@@ -19,7 +19,7 @@ export const fetchServiceEpic = action$ => action$.pipe(
     map(o => o.payload.serviceId),
     switchMap((serviceId) => {return ajax.getJSON(`${process.env.REACT_APP_ROOT_URL}/services/${serviceId}`).pipe(
             map((item) => {return fetchServiceSuccess(item)}),
-            catchError(message => of(fetchServiceFailure(message)))
+            catchError(({message}) => of(fetchServiceFailure(message)))
         )}
     ),
 );

@@ -15,7 +15,7 @@ function Service(props){
         services: {items = []}
     } = useSelector(state => state);
     const dispatch = useDispatch();
-    const notFound = (items.filter( (o) => { return o.id === serviceId } ).length <= 0);
+    
 
     React.useEffect( () => {
         dispatch(fetchServiceRequest(serviceId));
@@ -28,7 +28,7 @@ function Service(props){
     
     return (
         ((hasError) && <Message message={hasError} isHide={!hasError} handleRepeate={handleRepeate} />) || 
-        ( !isLoading && !id && items.length > 0 && notFound && <NotFound/> ) || 
+
         (
             <div className="item">
                 <div className="item-field-control">
