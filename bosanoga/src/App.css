@@ -1,0 +1,40 @@
+
+h1 {
+    color: #27aedb;
+    text-align: center;
+}
+
+.message {
+    position: absolute;
+    background-color: #ccc;
+    left:45%;
+    top:50%;
+}
+.message button{
+float: right;
+}
+.message p{
+clear: both;
+}
+.alert{
+    margin: 1rem;
+}
+.card{
+    height: 100%;
+}
+.card-footer{
+    background-color: transparent;
+    border-top: 0px;
+}
+.catalog-item-size.unavailable{
+    pointer-events: none;
+    text-decoration: line-through;
+
+}
+  
+.catalog-item-size:not(.unavailable):hover {
+    background: #727e86;
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+  }
