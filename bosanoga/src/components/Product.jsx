@@ -1,19 +1,20 @@
 import React from 'react';
 import {connect, useSelector,useDispatch} from'react-redux';
 import classNames from 'classnames';
-import {fetchProductThunk, changeProductCount, changeProductSize, addToCard } from '../actions/actionCreators';
+import {fetchProductThunk, changeProductCount, changeProductSize, addToCart } from '../actions/actionCreators';
 import Preloader from './Preloader';
 import Error from './Error';
 
 function Product(props){
 
     const {
-        item: {title, images=[], sku, manufacturer, color, material, season, reason, sizes }, 
+        item, 
         isLoading, 
         hasError,
         size:selectSize,
         count = 1,
     } = useSelector(state => state.product);
+    const {title, images=[], sku, manufacturer, color, material, season, reason, sizes } = item;
     const {match: {params: {productId}}, history} = props;
     
     const dispatch = useDispatch();
@@ -42,12 +43,12 @@ function Product(props){
     };
 
     const buy = () => {
-        dispatch(addToCard({
-            id: productId, 
+        dispatch(addToCart({
+            item, 
             size: selectSize, 
             count
         }));
-        history.push('/card');
+        history.push('/cart');
     };
 
     return (

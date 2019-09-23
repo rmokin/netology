@@ -46,39 +46,3 @@ export default function Section(props){
   );
 }
 
-/*
-export default class Section extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      module: null
-    };
-  }
- 
-  // after the initial render, wait for module to load
-  componentDidMount() {
-    const { resolve } = this.props;
-    import('../html/test.html').then((result) => {debugger;});
-    
-    //const test = 'test.html';
-    //resolve.then((data) => {debugger;});
-    //import html from `${test}`;
-    //const { default: module } = await resolve();
-    //const { default: module } = await async () => {import 'sdf'; };
-    //this.setState({ module });
-  }
-
-  render() {
-    debugger;
-    const { module } = this.state;
-    return (
-      <div>fsdf</div>
-    );
-    //if (!module) return <div>Loading module...</div>;
-    //if (module.view) return React.createElement(module.view);
-
-  }
-}
-*/

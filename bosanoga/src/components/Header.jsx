@@ -1,13 +1,43 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
+import classNames from 'classnames';
+import {useDispatch, useSelector} from'react-redux';
 
-//import '../css/style.css';
+import {Cart} from './Cart';
+import {Redirect} from 'react-router-dom';
+import Search from './Search';
+
 import '../assets/img/header-logo.png';
 import '../assets/img/banner.jpg';
 
 export default function Header(props){
 
-    return (
+    const [search, setSearchValue] = React.useState('');
+    const [isShownSearch, setIsShownSearch] = React.useState(false);
+    const [isRedirect, setRedirect] = React.useState('');
+    const [isNeedUpdateCartVidget, setIsNeedUpdateCartVidget] = React.useState(false);
+    const {
+        items = {}, 
+    } = useSelector(state => state.cart);
+
+    
+    
+    React.useEffect( () => {
+        setRedirect('');
+        return () => {};
+    },[isRedirect]);
+    const searchHandle = (search,shown) => {
+        
+        setIsShownSearch(!shown);
+        if (search && shown){
+            
+            setRedirect('/catalog');
+        }
+    }
+
+
+    return (isRedirect && <Redirect to={{pathname:'/catalog',state:{search}}} /> ) ||
+        (
         <header className="container">
             <div className="row">
                 <div className="col">
@@ -40,18 +70,35 @@ export default function Header(props){
                             </ul>
                             <div>
                                 <div className="header-controls-pics">
-                                    <div data-id="search-expander" className="header-controls-pic header-controls-search"></div>
+                                    <div 
+                                        data-id="search-expander" 
+                                        className="header-controls-pic header-controls-search"
+                                        onClick={ (e) => { 
+                                            e.preventDefault();
+                                            searchHandle(search,isShownSearch);
+                                        }}
+                                    >
+                                    </div>
                                     <NavLink exact to="/cart"  activeClassName="active">
-                                        <div className="header-controls-pic header-controls-cart">
-                                            <div className="header-controls-cart-full">1</div>
-                                            <div className="header-controls-cart-menu"></div>
-                                        </div>
+                                        <Cart view='mini' />
                                     </NavLink>
                                     
                                 </div>
-                                <form data-id="search-form" className="header-controls-search-form form-inline invisible">
-                                    <input className="form-control" placeholder="Поиск" />
-                                </form>
+                                {
+                                    (
+                                        <Search 
+                                            value=''
+                                            className={classNames(
+                                                "header-controls-search-form form-inline",
+                                                {"invisible":!isShownSearch})}
+                                            onchange={ (search) =>{
+                                                setSearchValue(search);
+                                            } }  
+                                            callback={(search) => {
+                                                searchHandle(search, true);
+                                            }} /> 
+                                    )
+                                }
                             </div>
                         </div>
                     </nav>

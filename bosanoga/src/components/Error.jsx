@@ -50,7 +50,7 @@ export default function Error(props){
 
     };
 
-    if (ticks >= autoRepeateAfter){
+    if (autoRepeateAfter > 0 && ticks >= autoRepeateAfter){
         repeate();
     }
     

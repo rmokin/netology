@@ -7,6 +7,7 @@ import {fetchCategoriesThunk, selectCategory} from '../actions/actionCreators';
 function Categories(props){
     const {
         items = [], 
+        isLoading = false,
         selectedCategory: {id:selectedCategoryId}
     } = useSelector(state => state.categories);
 
@@ -18,16 +19,18 @@ function Categories(props){
     },[]);
 
     const selectCatagory = (category) => {
-        return ;
         dispatch(selectCategory(category));
     }
-
-    return (
+    return (!isLoading && items.length > 0 ) && (
         <ul className="catalog-categories nav justify-content-center">
             <li className="nav-item">
-                <a className={classNames("nav-link", {
-                    active: !selectedCategoryId
-                })}>Все</a>
+                <a 
+                    className={classNames("nav-link", {
+                        active: !selectedCategoryId
+                    })}
+                    onClick={ (e) => {e.preventDefault(); selectCatagory({id:null}) }}
+                    href="#"
+                >Все</a>
             </li>
             {
                 items.map(({id:categoryId,title}, index) => {
@@ -38,6 +41,7 @@ function Categories(props){
                                     active: selectedCategoryId === categoryId
                                 })} 
                                 onClick={ (e) => {e.preventDefault(); selectCatagory({id:categoryId,title}) }}
+                                href="#"
                             >
                             {title}</a>
                         </li>
@@ -61,3 +65,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const ConnectedComponent = connect(mapStateToProps,mapDispatchToProps)(Categories);
 export {ConnectedComponent as Categories};
+
+
+

@@ -18,6 +18,10 @@ export default function catalogReducer(state = initState, action){
         case types.FETCH_CATALOG_SUCCESS:
             const {items} = action.payload;
             return {...state, items, isLoading:false, hasError:null};
+        case types.APPEND_CATALOG:
+            const {newItems} = action.payload;
+            const {items:oldItems} = state;
+            return {...state, items: [...oldItems, ...newItems], isLoading:false, hasError:null};
         default:
             return state;
     }

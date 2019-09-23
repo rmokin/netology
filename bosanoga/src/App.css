@@ -38,3 +38,41 @@ clear: both;
     color: #fff;
     cursor: pointer;
   }
+/*
+  .image-container {
+      height: 200px;
+  }
+  .image-container img{
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }*/
+  .image-container{
+
+    width: 100%;
+    /* height: 85%; */
+    text-align: center;
+
+  }
+
+  .img-fluid{
+    height: 256px;
+    min-height: 256px;
+    width: auto;
+    margin: auto;
+  }
+  .catalog-item .img-fluid{
+    height: auto;
+    width: 100%;
+  }
+  .banner .img-fluid{
+    width: 100%;
+    height: auto;
+  }
+  .row:not(:first-child){
+      margin-top: 25px; 
+  }
+  

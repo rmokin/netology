@@ -1,24 +1,40 @@
 import * as types from'./actionTypes';
 
 //--------------------------------------------------------------------------------------------------------------
-//UpToCatalog
-export const uptoCatalogRequest = () => { 
-    return {type:types.UPTO_CATALOG_REQUEST, payload:{}};
+//search
+export const upSearch = (seachr) => { 
+    return {type:types.UP_SEARCH, payload:{seachr}};
 };
-export const uptoCatalogSuccess = (items) => { 
-    return {type:types.UPTO_CATALOG_SUCCESS, payload:{items}};
+export const setSearch = (search) => { 
+    return {type:types.SET_SEARCH, payload:{search}};
 };
-export const uptoCatalogFailure = (message) => { 
-    return {type:types.UPTO_CATALOG_FAILURE, payload:{message}};
+export const clearSearch = () => { 
+    return {type:types.CLEAR_SEARCH, payload:{}};
 };
-export const uptoCatalogThunk = (categoryId, search, offset) => async (dispatch) => {
+
+//--------------------------------------------------------------------------------------------------------------
+//loadMoreCatalog
+export const loadMoreRequest = () => { 
+    return {type:types.LOADMORE_REQUEST, payload:{}};
+};
+export const loadMoreSuccess = (items, count) => { 
+    return {type:types.LOADMORE_SUCCESS, payload:{items, count}};
+};
+export const loadMoreFailure = (message) => { 
+    return {type:types.LOADMORE_FAILURE, payload:{message}};
+};
+export const loadMoreRefresh = (full) => { 
+    return {type:types.LOADMORE_REFRESH, payload:{full:full}};
+};
+export const loadMoreThunk = (categoryId, search, offset, count=6) => async (dispatch) => {
+    
     dispatch(fetchCatalogThunk(
         categoryId, 
         search,
         offset,
-        uptoCatalogRequest,
-        uptoCatalogSuccess,
-        uptoCatalogFailure
+        loadMoreRequest,
+        (items) => { return loadMoreSuccess(items, count) },
+        loadMoreFailure
     ));
 };
 //--------------------------------------------------------------------------------------------------------------
@@ -35,7 +51,12 @@ export const fetchCatalogFailure = (message) => {
     return {type:types.FETCH_CATALOG_FAILURE, payload:{message}};
 };
 
+export const appendCatalog = (newItems) => { 
+    return {type:types.APPEND_CATALOG, payload:{newItems}};
+};
+
 export const getCatalogThunk = (categoryId, search) => async (dispatch) => {
+    
     dispatch(fetchCatalogThunk(
         categoryId, 
         search,
@@ -52,7 +73,7 @@ export const fetchCatalogThunk = (categoryId, search, offset, successDispatcher,
         params += `${params ? '&' : ''}categoryId=${categoryId}`;
     }
     if (search){
-        params += `${params ? '&' : ''}q=${categoryId}`;
+        params += `${params ? '&' : ''}q=${search}`;
     }
     if (offset){
         params += `${params ? '&' : ''}offset=${offset}`;
@@ -118,10 +139,48 @@ export const fetchProductThunk = (productId) => async (dispatch) => {
     ));
 }
 //--------------------------------------------------------------------------------------------------------------
-//Card
-export const addToCard = ({id, size, count}) => { 
-    return {type:types.ADD_TO_CARD, payload:{id, size, count}};
+//Cart
+export const loadToCart = () => { 
+    return {type:types.LOAD_CART, payload:{}};
 };
+export const addToCart = ({item, size, count}) => { 
+    return {type:types.ADD_TO_CART, payload:{item, size, count}};
+};
+export const delToCart = (id, size) => { 
+    return {type:types.DEL_TO_CART, payload:{item:{id}, size}};
+};
+export const setToCart = ({item, size, count}) => { 
+    return {type:types.SET_TO_CART, payload:{item, size, count}};
+};
+export const clearToCart = () => { 
+    return {type:types.CLEAR_CART, payload:{}};
+};
+//--------------------------------------------------------------------------------------------------------------
+//Order
+export const postOrderRequest = () => { 
+    return {type:types.POST_ORDER_REQUEST, payload:{}};
+};
+export const postOrderSuccess = (result) => { 
+    return {type:types.POST_ORDER_SUCCESS, payload:{result}};
+};
+export const postOrderFailure = (message) => { 
+    return {type:types.POST_ORDER_FAILURE, payload:{message}};
+};
+export const postOrderClear = () => { 
+    return {type:types.POST_ORDER_CLEAR, payload:{}};
+};
+
+
+export const postOrderThunk = (order) => async (dispatch) => {
+    dispatch(fetchThunk(
+        `${process.env.REACT_APP_ROOT_URL}/api/order`, 
+        order,
+        null,
+        postOrderRequest,
+        postOrderSuccess,
+        postOrderFailure
+    ));
+}
 //--------------------------------------------------------------------------------------------------------------
 //Categories
 export const fetchCategoriesRequest = () => { 
@@ -164,146 +223,16 @@ export const fetchThunk = (url, postData, opt={}, starterDispatcher, successDisp
         if(!response.ok){
             throw new Error(response.statusText);
         }
-        const data = await response.json();
-        (successDispatcher) && dispatch(successDispatcher(data));
-    }
-    catch(e){
-        (errorDispatcher) && dispatch(errorDispatcher(e.message));
-    } 
-    (finishDispatcher) && dispatch(finishDispatcher());
-};
-
-
-
-
-
-
-
-/*
-
-export const fetchServicesRequest = () => { 
-    return {type:types.FETCH_SERVICES_REQUEST};
-};
-export const fetchServicesFailure = (message) => { 
-    return {type:types.FETCH_SERVICES_FAILURE, payload:{message}};
-};
-export const fetchServicesSuccess = (items) => { 
-    return {type:types.FETCH_SERVICES_SUCCESS, payload:{items}};
-};
-
-export const fetchServiceFailure = (message) => { 
-    return {type:types.FETCH_SERVICE_FAILURE, payload:{message}};
-};
-export const fetchServiceRequest = () => { 
-    return {type:types.FETCH_SERVICE_REQUEST};
-};
-export const fetchServiceSuccess = (item) => { 
-    return {type:types.FETCH_SERVICE_SUCCESS, payload:{item}};
-};
-export const fetchServiceSaveInit = () => { 
-    return {type:types.SAVE_SERVICE_INIT, payload:{}};
-};
-export const fetchServiceSaveRequest = () => { 
-    return {type:types.SAVE_SERVICE_REQUEST, payload:{}};
-};
-export const fetchServiceSaveSuccess = (item) => { 
-    return {type:types.SAVE_SERVICE_SUCCESS, payload:{item}};
-};
-export const fetchServiceSaveFailure = (message) => { 
-    return {type:types.SAVE_SERVICE_FAILURE, payload:{message}};
-};
-
-export const fetchServiceDeleteRequest = (serviceId) => { 
-    return {type:types.DELETE_SERVICE_REQUEST, payload:{serviceId}};
-};
-export const fetchServiceDeleteSuccess = (serviceId) => { 
-    return {type:types.DELETE_SERVICE_SUCCESS, payload:{serviceId}};
-};
-export const fetchServiceDeleteFailure = (serviceId,message) => { 
-    return {type:types.DELETE_SERVICE_FAILURE, payload:{serviceId, message}};
-};
-/*
-export const fetchThunk = (url, postData, opt={}, starterDispatcher, successDispatcher, errorDispatcher, finishDispatcher) => async (dispatch) => {
-    (starterDispatcher) && dispatch(starterDispatcher());
-    try{
-        const response = await fetch(url,{
-            cache: 'no-cache',
-            referrer: 'no-referrer',
-            method: ((postData) && 'POST') || 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: ((postData) && JSON.stringify(postData)) || (undefined),
-            ...opt,
-        });
-        if(!response.ok){
-            throw new Error(response.statusText);
+       
+        let data = null;
+        if (response.status !== 204){
+            data = await response.json();
         }
-        const data = await response.json();
         (successDispatcher) && dispatch(successDispatcher(data));
     }
     catch(e){
         (errorDispatcher) && dispatch(errorDispatcher(e.message));
     } 
     (finishDispatcher) && dispatch(finishDispatcher());
-};*/
-/*
-export const fetchServicesThunk = () => async (dispatch) => {
-    dispatch(fetchThunk(
-        `${process.env.REACT_APP_SERVICES_URL}`, 
-        null,
-        null,
-        fetchServicesRequest,
-        fetchServicesSuccess,
-        fetchServicesFailure
-    ));
-}
+};
 
-export const fetchServiceThunk = (serviceId) => async (dispatch) => {
-    dispatch(fetchThunk(
-        `${process.env.REACT_APP_SERVICES_URL}/${serviceId}`, 
-        null,
-        null,
-        fetchServiceRequest,
-        fetchServiceSuccess,
-        fetchServiceFailure
-    ));
-}
-
-export const fetchServiceSaveThunk = (serviceId, name, price, content) => async (dispatch) => {
-    dispatch(fetchThunk(
-        `${process.env.REACT_APP_SERVICES_URL}/${serviceId}`, 
-        {
-            name,
-            price,
-            content
-        },
-        null,
-        fetchServiceSaveRequest,
-        fetchServiceSaveSuccess,
-        fetchServiceSaveFailure
-    ));
-}
-
-export const fetchServiceDeleteThunk = (serviceId) => async (dispatch) => {
-    dispatch(fetchThunk(
-        `${process.env.REACT_APP_SERVICES_URL}/${serviceId}`, 
-        null,
-        {
-            method: 'DELETE',
-        },
-        () => { return fetchServiceDeleteRequest(serviceId) },
-        (data) => { return fetchServiceDeleteSuccess(serviceId) },
-        (message) => { return fetchServiceDeleteFailure(serviceId, message) },
-    ));
-}
-
-
-export function changeServiceField(name,value){
-    return {type: types.CHANGE_SERVICE_FIELD, payload:{name,value}};
-}
-
-export function clearServiceField(){
-    return {type: types.CLEAR_SERVICE_FIELD, payload:{}};
-}
-*/

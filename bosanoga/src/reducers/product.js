@@ -13,7 +13,7 @@ const initState = {
 export default function productReducer(state = initState, action){
     switch(action.type){
         case types.FETCH_PRODUCT_REQUEST:
-            return {...state, isLoading:true, hasError:null};
+            return {...state, isLoading:true, hasError:null, size:null, count:1};
         case types.FETCH_PRODUCT_FAILURE:
             const {message} = action.payload;
             return {...state, isLoading:false, hasError:message};
